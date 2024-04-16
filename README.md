@@ -192,15 +192,20 @@ ORDER BY number_of_businesses DESC;
  This query identifies the most enduring business on each continent, underscoring regional historical and economic resilience.
 
 ```sql
-SELECT co.continent, MIN(b.year_founded) AS oldest_founding_year
+SELECT b.business, co.continent, b.year_founded AS oldest_founding_year
 FROM businesses AS b
-JOIN countries AS co 
+INNER JOIN countries AS co 
 ON b.country_code = co.country_code
-GROUP BY co.continent
+INNER JOIN 
+    (SELECT continent, MIN(year_founded) AS oldest_year FROM businesses AS b 
+    JOIN countries AS co ON b.country_code = co.country_code
+    GROUP BY continent) AS subq ON co.continent = subq.continent AND b.year_founded = subq.oldest_year
 ORDER BY oldest_founding_year;
 ```
 
-![query]()
+![query](Project_Oldest_Businesses\assets\Q10.PNG)
+
+*The table showcases the oldest businesses still in operation on each continent far back as 578 AD for Kongō Gumi in Asia to 1809 for Australia Post in Oceania.*
 
 ### 11. What is the oldest business in each country?
  This query provides a national perspective on business endurance, highlighting the oldest company still in operation in each country.
@@ -213,7 +218,7 @@ GROUP BY country
 ORDER BY oldest_year;
 ```
 
-![query]()
+![query](Project_Oldest_Businesses\assets\Q11.PNG)
 
 ### 12. Which is the oldest business within each category?
  This query points out the business with the longest history in each specific sector, providing insight into the sectors with long historical roots.
