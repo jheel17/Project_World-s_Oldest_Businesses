@@ -104,7 +104,7 @@ ORDER BY oldest_year;
 
 -- Lets begin to investigate business longevity and category trends. 
 
---13. Average lifespan of businesses within each category. 
+--13. Average lifespan of businesses within each continent. 
 --This can provide insights into which types of businesses tend to be more enduring.
 
 SELECT category, ROUND(AVG(2024 - year_founded), 0) AS average_lifespan

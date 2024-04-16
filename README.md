@@ -73,54 +73,198 @@ By addressing these questions, the project provides a detailed look at the chara
 
 The queries provided systematically explore the dataset of the world's oldest businesses. Here's a breakdown of the specific questions each query addresses. 
 
+
+
 ### 1. What is the total count of businesses, categories, and countries listed in the dataset?
+
  This query gives an overview of the dataset's scope, helping to set the stage for deeper analysis.
 
+```sql
+SELECT 
+  (SELECT COUNT(*) FROM businesses) AS total_businesses,
+  (SELECT COUNT(*) FROM categories) AS total_categories,
+  (SELECT COUNT(*) FROM countries) AS total_countries;
+```
+
 ### 2. What are the unique business categories included in the dataset?
- This query identifies the diversity of business types captured in the historical records.
+
+This query identifies the diversity of business types captured in the historical records.
+
+```sql
+SELECT DISTINCT category
+FROM categories
+ORDER BY category;
+```
 
 ### 3. What are the oldest and newest founding years recorded among all businesses?
-   Understanding the temporal range of the dataset highlights historical depth and the evolution of business enterprises.
+
+Understanding the temporal range of the dataset highlights historical depth and the evolution of business enterprises.
+
+```sql
+SELECT 
+  MIN(year_founded) AS oldest_business_year,
+  MAX(year_founded) AS newest_business_year
+FROM businesses;
+```
 
 ### 4. How many businesses were founded before the year 1000, and what are their names and founding years?
- This query indicates the earliest economic activities that have persisted into the modern era.
+
+This query indicates the earliest economic activities that have persisted into the modern era.
+
+```sql
+SELECT COUNT(year_founded) AS Total_Founded_Before_1000, year_founded, business
+FROM businesses 
+WHERE year_founded < 1000 
+GROUP BY year_founded, business
+ORDER BY year_founded;
+```
 
 ### 5. Which are the top 10 oldest businesses, and when were they founded?
    This query highlights the most enduring businesses in the dataset, providing a glimpse into remarkable historical longevity.
 
+```sql
+SELECT business, year_founded
+FROM businesses
+ORDER BY year_founded
+LIMIT 10;
+```
+
 ### 6. How is the distribution of business founding years spread across the dataset?
    This query analyzes the spread and concentration of business establishments over centuries, offering insights into historical economic conditions and business formation rates.
+
+```sql
+SELECT year_founded, COUNT(*) AS count
+FROM businesses
+GROUP BY year_founded
+ORDER BY year_founded;
+```
 
 ### 7. How many businesses are there in each country?
  This query shows the geographical spread and concentration of historical businesses, which can be indicative of historical commercial hubs or economic activity.
 
+```sql
+ SELECT country, COUNT(*) AS business_count
+FROM businesses
+JOIN countries ON businesses.country_code = countries.country_code
+GROUP BY country
+ORDER BY business_count DESC;
+```
+
 ### 8. What is the count of businesses on each continent?
    This query provides a broader view of the distribution of business longevity and historical commercial activity at the continental level.
+
+```sql
+SELECT co.continent, COUNT(b.business) AS count
+FROM businesses AS b
+JOIN countries AS co 
+ON b.country_code = co.country_code
+GROUP BY co.continent
+ORDER BY count DESC;
+```
 
 ### 9. How many businesses are there in each category?
  This query reveals which types of businesses are more common, suggesting which industries have been historically durable or popular.
 
+```sql
+SELECT c.category, COUNT(b.category_code) AS number_of_businesses
+FROM businesses AS b
+JOIN categories AS c 
+ON b.category_code = c.category_code
+GROUP BY c.category
+ORDER BY number_of_businesses DESC;
+```
+
 ### 10. Which is the oldest business still operating on each continent?
  This query identifies the most enduring business on each continent, underscoring regional historical and economic resilience.
+
+```sql
+SELECT co.continent, MIN(b.year_founded) AS oldest_founding_year
+FROM businesses AS b
+JOIN countries AS co 
+ON b.country_code = co.country_code
+GROUP BY co.continent
+ORDER BY oldest_founding_year;
+```
 
 ### 11. What is the oldest business in each country?
  This query provides a national perspective on business endurance, highlighting the oldest company still in operation in each country.
 
+```sql
+SELECT country, MIN(year_founded) AS oldest_year
+FROM businesses
+JOIN countries ON businesses.country_code = countries.country_code
+GROUP BY country
+ORDER BY oldest_year;
+```
+
 ### 12. Which is the oldest business within each category?
  This query points out the business with the longest history in each specific sector, providing insight into the sectors with long historical roots.
+
+```sql
+SELECT category, MIN(year_founded) AS oldest_year
+FROM businesses
+JOIN categories ON businesses.category_code = categories.category_code
+GROUP BY category
+ORDER BY oldest_year;
+```
+
 
 ### 13. What is the average lifespan of businesses within each category?
  This query estimates the longevity of businesses by category, giving insights into which types of businesses tend to last the longest.
 
+```sql
+ SELECT category, ROUND(AVG(2024 - year_founded), 0) AS average_lifespan
+FROM businesses
+JOIN categories ON businesses.category_code = categories.category_code
+GROUP BY category
+ORDER BY average_lifespan DESC;
+```
+
 ### 14. What is the average and median age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
+
+```sql
+SELECT continent, ROUND(AVG(2024 - year_founded),0) AS average_age, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_founded) AS median_age
+FROM businesses
+JOIN countries ON businesses.country_code = countries.country_code
+GROUP BY continent
+ORDER BY average_age DESC;
+```
 
 ### 15. How have business categories evolved over time?
   This query investigates changes in business categories across centuries, indicating shifts in economic focus, technological advancement, or societal needs.
 
+```sql
+SELECT century, category, COUNT(*) AS count
+FROM (
+    SELECT category, (year_founded / 100 + 1) * 100 AS century
+    FROM businesses
+    JOIN categories ON businesses.category_code = categories.category_code
+) AS centuries
+GROUP BY century, category
+ORDER BY century, count DESC;
+```
+
 ### 16. Which business types are most common among the oldest quartile of businesses?
   This query looks at common business types among the oldest businesses, suggesting which industries have historically demonstrated endurance and stability.
+
+```sql
+SELECT category, COUNT(*) AS count
+FROM businesses
+JOIN categories ON businesses.category_code = categories.category_code
+WHERE year_founded <= (SELECT PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY year_founded) FROM businesses)
+GROUP BY category
+ORDER BY count DESC;
+```
 
 ### 17. What are the most prevalent business categories on each continent?
  This query shows how business types vary by continent, highlighting regional differences in economic activities and possibly cultural preferences.
 
+```sql
+SELECT continent, category, COUNT(*) AS count
+FROM businesses
+JOIN countries ON businesses.country_code = countries.country_code
+JOIN categories ON businesses.category_code = categories.category_code
+GROUP BY continent, category
+ORDER BY continent, count DESC;
+```
