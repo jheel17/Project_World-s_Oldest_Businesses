@@ -220,6 +220,10 @@ ORDER BY oldest_year;
 
 ![query](Project_Oldest_Businesses\assets\Q11.PNG)
 
+*The map provides a depiction of the oldest businesses in each country, with years of foundation prominently displayed.*
+
+*This variation showcases not only the historical richness of global commerce but also the unique economic evolutions that various countries have experienced.*
+
 ### 12. Which is the oldest business within each category?
  This query points out the business with the longest history in each specific sector, providing insight into the sectors with long historical roots.
 
@@ -230,7 +234,13 @@ JOIN categories ON businesses.category_code = categories.category_code
 GROUP BY category
 ORDER BY oldest_year;
 ```
-![query]()
+![query](Project_Oldest_Businesses\assets\Q12.PNG)
+
+*The table presents the oldest businesses within various categories, revealing that sectors like Construction and Hospitality (Cafés, Restaurants & Bars) have the deepest historical roots, with the oldest businesses dating back to 578 and 803 respectively.*
+
+*This underscores the enduring nature of industries that fulfill fundamental human needs like shelter and food.*
+
+*On the other end, sectors such as Energy and Media have the youngest old-timers, suggesting they may have emerged alongside industrial and technological advancements.*
 
 ### 13. What is the average lifespan of businesses within each category?
  This query estimates the longevity of businesses by category, giving insights into which types of businesses tend to last the longest.
@@ -243,7 +253,9 @@ GROUP BY category
 ORDER BY average_lifespan DESC;
 ```
 
-![query]()
+![query](Project_Oldest_Businesses\assets\Q13.PNG)
+
+**
 
 ### 14. What is the average and median age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
