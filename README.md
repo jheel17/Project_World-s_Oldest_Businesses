@@ -255,7 +255,13 @@ ORDER BY average_lifespan DESC;
 
 ![query](Project_Oldest_Businesses\assets\Q13.PNG)
 
-**
+*The bar chart visualizes the average lifespan of businesses across different categories.*
+
+*It highlights that construction businesses have the longest average lifespan, significantly outlasting others.*
+
+*This suggests that construction may be a sector where businesses are able to sustain operations over long periods, possibly due to the perennial need for infrastructure.*
+
+ *On the contrary, media and energy businesses appear to have the shortest average lifespans, which could indicate these sectors are more susceptible to technological changes or market fluctuations.*
 
 ### 14. What is the average and median age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
