@@ -77,6 +77,7 @@ The queries provided systematically explore the dataset of the world's oldest bu
 
 ### 1. What is the total count of businesses, categories, and countries listed in the dataset?
 
+
  This query gives an overview of the dataset's scope, helping to set the stage for deeper analysis.
 
 ```sql
@@ -85,6 +86,11 @@ SELECT
   (SELECT COUNT(*) FROM categories) AS total_categories,
   (SELECT COUNT(*) FROM countries) AS total_countries;
 ```
+
+![query1](Project_Oldest_Businesses\assets\Q1.PNG)
+
+*The dataset reveals a remarkable historical tapestry with 163 businesses enduring across 19 categories and 195 countries, showcasing the global and diverse nature of commercial resilience.*
+
 
 ### 2. What are the unique business categories included in the dataset?
 
@@ -95,6 +101,9 @@ SELECT DISTINCT category
 FROM categories
 ORDER BY category;
 ```
+![query2](Project_Oldest_Businesses\assets\Q2.PNG)
+
+*The dataset spans a wide array of industries, from Agriculture to Telecommunications, highlighting a rich diversity in the types of businesses that have weathered the centuries, including sectors like "Cafés, Restaurants & Bars" that have long been central to social life.*
 
 ### 3. What are the oldest and newest founding years recorded among all businesses?
 
@@ -106,6 +115,10 @@ SELECT
   MAX(year_founded) AS newest_business_year
 FROM businesses;
 ```
+![query3](Project_Oldest_Businesses\assets\Q3.PNG)
+
+**
+
 
 ### 4. How many businesses were founded before the year 1000, and what are their names and founding years?
 
@@ -118,7 +131,7 @@ WHERE year_founded < 1000
 GROUP BY year_founded, business
 ORDER BY year_founded;
 ```
-
+![query]()
 ### 5. Which are the top 10 oldest businesses, and when were they founded?
    This query highlights the most enduring businesses in the dataset, providing a glimpse into remarkable historical longevity.
 
