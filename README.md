@@ -117,7 +117,7 @@ FROM businesses;
 ```
 ![query3](Project_Oldest_Businesses\assets\Q3.PNG)
 
-**
+*The dataset captures an extraordinary span of history, with the oldest business dating back to 578 AD and the newest to 1999, showcasing over a millennium of commercial endurance and evolution.*
 
 
 ### 4. How many businesses were founded before the year 1000, and what are their names and founding years?
@@ -131,26 +131,10 @@ WHERE year_founded < 1000
 GROUP BY year_founded, business
 ORDER BY year_founded;
 ```
-![query]()
-### 5. Which are the top 10 oldest businesses, and when were they founded?
-   This query highlights the most enduring businesses in the dataset, providing a glimpse into remarkable historical longevity.
+![query4](Project_Oldest_Businesses\assets\Q4.PNG)
 
-```sql
-SELECT business, year_founded
-FROM businesses
-ORDER BY year_founded
-LIMIT 10;
-```
+*The table shows a fascinating glimpse into the oldest businesses that have survived for more than a millennium, with a variety of enterprises including a construction company, restaurants, a winery, a mint, and a bar, each having its unique legacy dating as far back as 578 AD*
 
-### 6. How is the distribution of business founding years spread across the dataset?
-   This query analyzes the spread and concentration of business establishments over centuries, offering insights into historical economic conditions and business formation rates.
-
-```sql
-SELECT year_founded, COUNT(*) AS count
-FROM businesses
-GROUP BY year_founded
-ORDER BY year_founded;
-```
 
 ### 7. How many businesses are there in each country?
  This query shows the geographical spread and concentration of historical businesses, which can be indicative of historical commercial hubs or economic activity.
@@ -162,7 +146,12 @@ JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY country
 ORDER BY business_count DESC;
 ```
+![query](Project_Oldest_Businesses\assets\Q7.PNG)
 
+*The map visualizes the distribution of the oldest businesses still in operation around the world, with each dot representing at least one business in a country.*
+
+ *It appears that every country has at least one long-standing business, with a notable concentration in Africa & Europe, indicating a rich history of commerce and potentially more favorable conditions for business longevity in that region.*
+*
 ### 8. What is the count of businesses on each continent?
    This query provides a broader view of the distribution of business longevity and historical commercial activity at the continental level.
 
@@ -174,6 +163,10 @@ ON b.country_code = co.country_code
 GROUP BY co.continent
 ORDER BY count DESC;
 ```
+
+![query](Project_Oldest_Businesses\assets\Q8.PNG)
+
+*This bar graph depicts the number of longstanding businesses by continent, highlighting Africa as the leader with the highest count, followed by Europe.*
 
 ### 9. How many businesses are there in each category?
  This query reveals which types of businesses are more common, suggesting which industries have been historically durable or popular.
@@ -187,6 +180,14 @@ GROUP BY c.category
 ORDER BY number_of_businesses DESC;
 ```
 
+![query](Project_Oldest_Businesses\assets\Q9.PNG)
+
+*The bar chart shows the distribution of the number of businesses across various categories.*
+
+*Banking & Finance tops the chart, suggesting it's the sector with the highest number of enduring businesses. This could reflect the fundamental role of financial services in economic sustainability and growth over centuries.*
+
+*In contrast, sectors like Medical and Construction have fewer representatives among the oldest companies, possibly due to the evolution of technologies and practices in these areas.*
+
 ### 10. Which is the oldest business still operating on each continent?
  This query identifies the most enduring business on each continent, underscoring regional historical and economic resilience.
 
@@ -199,6 +200,8 @@ GROUP BY co.continent
 ORDER BY oldest_founding_year;
 ```
 
+![query]()
+
 ### 11. What is the oldest business in each country?
  This query provides a national perspective on business endurance, highlighting the oldest company still in operation in each country.
 
@@ -210,6 +213,8 @@ GROUP BY country
 ORDER BY oldest_year;
 ```
 
+![query]()
+
 ### 12. Which is the oldest business within each category?
  This query points out the business with the longest history in each specific sector, providing insight into the sectors with long historical roots.
 
@@ -220,7 +225,7 @@ JOIN categories ON businesses.category_code = categories.category_code
 GROUP BY category
 ORDER BY oldest_year;
 ```
-
+![query]()
 
 ### 13. What is the average lifespan of businesses within each category?
  This query estimates the longevity of businesses by category, giving insights into which types of businesses tend to last the longest.
@@ -233,6 +238,8 @@ GROUP BY category
 ORDER BY average_lifespan DESC;
 ```
 
+![query]()
+
 ### 14. What is the average and median age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
 
@@ -243,6 +250,8 @@ JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY continent
 ORDER BY average_age DESC;
 ```
+
+![query]()
 
 ### 15. How have business categories evolved over time?
   This query investigates changes in business categories across centuries, indicating shifts in economic focus, technological advancement, or societal needs.
@@ -258,6 +267,8 @@ GROUP BY century, category
 ORDER BY century, count DESC;
 ```
 
+![query]()
+
 ### 16. Which business types are most common among the oldest quartile of businesses?
   This query looks at common business types among the oldest businesses, suggesting which industries have historically demonstrated endurance and stability.
 
@@ -270,6 +281,9 @@ GROUP BY category
 ORDER BY count DESC;
 ```
 
+![query]()
+
+
 ### 17. What are the most prevalent business categories on each continent?
  This query shows how business types vary by continent, highlighting regional differences in economic activities and possibly cultural preferences.
 
@@ -281,3 +295,6 @@ JOIN categories ON businesses.category_code = categories.category_code
 GROUP BY continent, category
 ORDER BY continent, count DESC;
 ```
+
+
+![query]()
