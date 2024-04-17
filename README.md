@@ -136,7 +136,7 @@ ORDER BY year_founded;
 *The table shows a fascinating glimpse into the oldest businesses that have survived for more than a millennium, with a variety of enterprises including a construction company, restaurants, a winery, a mint, and a bar, each having its unique legacy dating as far back as 578 AD*
 
 
-### 7. How many businesses are there in each country?
+### 5. How many businesses are there in each country?
  This query shows the geographical spread and concentration of historical businesses, which can be indicative of historical commercial hubs or economic activity.
 
 ```sql
@@ -152,7 +152,7 @@ ORDER BY business_count DESC;
 
  *It appears that every country has at least one long-standing business, with a notable concentration in Africa & Europe, indicating a rich history of commerce and potentially more favorable conditions for business longevity in that region.*
 *
-### 8. What is the count of businesses on each continent?
+### 6. What is the count of businesses on each continent?
    This query provides a broader view of the distribution of business longevity and historical commercial activity at the continental level.
 
 ```sql
@@ -168,7 +168,7 @@ ORDER BY count DESC;
 
 *This bar graph depicts the number of longstanding businesses by continent, highlighting Africa as the leader with the highest count, followed by Europe.*
 
-### 9. How many businesses are there in each category?
+### 7. How many businesses are there in each category?
  This query reveals which types of businesses are more common, suggesting which industries have been historically durable or popular.
 
 ```sql
@@ -188,7 +188,7 @@ ORDER BY number_of_businesses DESC;
 
 *In contrast, sectors like Medical and Construction have fewer representatives among the oldest companies, possibly due to the evolution of technologies and practices in these areas.*
 
-### 10. Which is the oldest business still operating on each continent?
+### 8. Which is the oldest business still operating on each continent?
  This query identifies the most enduring business on each continent, underscoring regional historical and economic resilience.
 
 ```sql
@@ -207,7 +207,7 @@ ORDER BY oldest_founding_year;
 
 *The table showcases the oldest businesses still in operation on each continent far back as 578 AD for Kongō Gumi in Asia to 1809 for Australia Post in Oceania.*
 
-### 11. What is the oldest business in each country?
+### 9. What is the oldest business in each country?
  This query provides a national perspective on business endurance, highlighting the oldest company still in operation in each country.
 
 ```sql
@@ -224,7 +224,7 @@ ORDER BY oldest_year;
 
 *This variation showcases not only the historical richness of global commerce but also the unique economic evolutions that various countries have experienced.*
 
-### 12. Which is the oldest business within each category?
+### 10. Which is the oldest business within each category?
  This query points out the business with the longest history in each specific sector, providing insight into the sectors with long historical roots.
 
 ```sql
@@ -242,7 +242,7 @@ ORDER BY oldest_year;
 
 *On the other end, sectors such as Energy and Media have the youngest old-timers, suggesting they may have emerged alongside industrial and technological advancements.*
 
-### 13. What is the average lifespan of businesses within each category?
+### 11. What is the average lifespan of businesses within each category?
  This query estimates the longevity of businesses by category, giving insights into which types of businesses tend to last the longest.
 
 ```sql
@@ -263,7 +263,7 @@ ORDER BY average_lifespan DESC;
 
  *On the contrary, media and energy businesses appear to have the shortest average lifespans, which could indicate these sectors are more susceptible to technological changes or market fluctuations.*
 
-### 14. What is the average age of businesses on each continent?
+### 12. What is the average age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
 
 ```sql
@@ -285,7 +285,7 @@ ORDER BY average_age DESC;
 *This contrast highlights how deeply the history and stability of a region can impact the longevity of its commerce sector.*
 
  
-### 15. How have business categories evolved over time?
+### 13. How have business categories evolved over time?
   This query investigates changes in business categories across centuries, indicating shifts in economic focus, technological advancement, or societal needs.
 
 **Medieval: From 500 AD up until 1499.**
@@ -347,7 +347,7 @@ ORDER BY time_period, count DESC;
 *Overall, these trends depict an evolution from fundamental industries like construction to a sophisticated, interconnected global economy characterized by finance, technology, and service industries, mirroring the progress in societal development and technological innovation.*
 
 
-### 17. What are the most prevalent business categories on each continent?
+### 14. What are the most prevalent business categories on each continent?
  This query shows how business types vary by continent, highlighting regional differences in economic activities and possibly cultural preferences.
 
 ```sql

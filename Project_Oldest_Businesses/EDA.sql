@@ -32,24 +32,10 @@ WHERE year_founded < 1000
 GROUP BY year_founded, business
 ORDER BY year_founded;
 
---5. Finding the Top 10 Oldest Businesses.
-
-SELECT business, year_founded
-FROM businesses
-ORDER BY year_founded
-LIMIT 10;
-
---6. Looking into the distribution of Business Founding Years. 
---Analyze how business founding years are spread across the dataset.
-
-SELECT year_founded, COUNT(*) AS count
-FROM businesses
-GROUP BY year_founded
-ORDER BY year_founded;
 
 --Next lets analyze the geographical distribution of businesses.
 
---7. Count of Businesses per Country. 
+--5. Count of Businesses per Country. 
 
 SELECT country, COUNT(*) AS business_count
 FROM businesses
@@ -57,7 +43,7 @@ JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY country
 ORDER BY business_count DESC;
 
---8. Count of businesses per continent.
+--6. Count of businesses per continent.
 
 SELECT co.continent, COUNT(b.business) AS count
 FROM businesses AS b
@@ -66,7 +52,7 @@ ON b.country_code = co.country_code
 GROUP BY co.continent
 ORDER BY count DESC;
 
---9. Count of business per category.
+--7. Count of business per category.
 
 SELECT c.category, COUNT(b.category_code) AS number_of_businesses
 FROM businesses AS b
@@ -77,16 +63,18 @@ ORDER BY number_of_businesses DESC;
 
 --Time to delve deeper and find the oldest entities to highlight historical endurance.
 
---10. Find the oldest business on each continent.
+--8. Find the oldest business on each continent.
 
-SELECT co.continent, MIN(b.year_founded) AS oldest_founding_year
+SELECT b.business, co.continent, b.year_founded AS oldest_founding_year
 FROM businesses AS b
-JOIN countries AS co 
+INNER JOIN countries AS co 
 ON b.country_code = co.country_code
-GROUP BY co.continent
+INNER JOIN 
+    (SELECT continent, MIN(year_founded) AS oldest_year FROM businesses AS b 
+    JOIN countries AS co ON b.country_code = co.country_code
+    GROUP BY continent) AS subq ON co.continent = subq.continent AND b.year_founded = subq.oldest_year
 ORDER BY oldest_founding_year;
-
---11. Identify the oldest business in each country.
+--9. Identify the oldest business in each country.
 
 SELECT country, MIN(year_founded) AS oldest_year
 FROM businesses
@@ -94,7 +82,7 @@ JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY country
 ORDER BY oldest_year;
 
---12. Find oldest Business in Each Category.
+--10. Find oldest Business in Each Category.
 
 SELECT category, MIN(year_founded) AS oldest_year
 FROM businesses
@@ -104,7 +92,7 @@ ORDER BY oldest_year;
 
 -- Lets begin to investigate business longevity and category trends. 
 
---13. Average lifespan of businesses within each continent. 
+--11. Average lifespan of businesses within each continent. 
 --This can provide insights into which types of businesses tend to be more enduring.
 
 SELECT category, ROUND(AVG(2024 - year_founded), 0) AS average_lifespan
@@ -113,7 +101,7 @@ JOIN categories ON businesses.category_code = categories.category_code
 GROUP BY category
 ORDER BY average_lifespan DESC;
 
---14. Business Longevity by Continent. This query assesses the average and median age of businesses on 
+--12. Business Longevity by Continent. This query assesses the average and median age of businesses on 
 --each continent, providing insights into regional differences in business endurance.
 
 SELECT continent, ROUND(AVG(2024 - year_founded),0) AS average_age, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_founded) AS median_age
@@ -124,30 +112,28 @@ ORDER BY average_age DESC;
 
 --Analyze category dynamics and economic indicators. 
 
---15. Changes in Business Categories Over Time. Investigate how the types of businesses (categories) 
+--13. Changes in Business Categories Over Time. Investigate how the types of businesses (categories) 
 --have changed over time, possibly indicating economic and technological shifts.
 
-SELECT century, category, COUNT(*) AS count
+SELECT 
+  CASE
+    WHEN century >= 2000 THEN 'Contemporary'
+    WHEN century >= 1900 THEN 'Modern'
+    WHEN century >= 1500 THEN 'Early Modern'
+    WHEN century >= 500 THEN 'Medieval'
+    ELSE 'Ancient'
+  END AS time_period,
+  category,
+  COUNT(*) AS count
 FROM (
     SELECT category, (year_founded / 100 + 1) * 100 AS century
     FROM businesses
     JOIN categories ON businesses.category_code = categories.category_code
 ) AS centuries
-GROUP BY century, category
-ORDER BY century, count DESC;
+GROUP BY time_period, category
+ORDER BY time_period, count DESC;
 
---16. Most Common Business Types in the Oldest Quartile. Look at the most common types of businesses 
---among the oldest quartile to see if certain industries are more likely to have long-standing 
---enterprises.
-
-SELECT category, COUNT(*) AS count
-FROM businesses
-JOIN categories ON businesses.category_code = categories.category_code
-WHERE year_founded <= (SELECT PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY year_founded) FROM businesses)
-GROUP BY category
-ORDER BY count DESC;
-
---17. Continental Distribution of Business Categories: See which business categories are most prevalent on 
+--14. Continental Distribution of Business Categories: See which business categories are most prevalent on 
 --each continent, highlighting regional economic specialties or cultural preferences.
 
 SELECT continent, category, COUNT(*) AS count
