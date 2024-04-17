@@ -263,48 +263,88 @@ ORDER BY average_lifespan DESC;
 
  *On the contrary, media and energy businesses appear to have the shortest average lifespans, which could indicate these sectors are more susceptible to technological changes or market fluctuations.*
 
-### 14. What is the average and median age of businesses on each continent?
+### 14. What is the average age of businesses on each continent?
  This query analyzes how business longevity varies by continent, potentially reflecting regional economic stability and historical conditions.
 
 ```sql
-SELECT continent, ROUND(AVG(2024 - year_founded),0) AS average_age, PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY year_founded) AS median_age
+SELECT continent, ROUND(AVG(2024 - year_founded),0) AS average_age
 FROM businesses
 JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY continent
 ORDER BY average_age DESC;
 ```
 
-![query]()
+![query](Project_Oldest_Businesses\assets\Q14.PNG)
 
+*The bar graph illustrates a striking disparity in the average age of businesses across continents.*
+
+*Europe towers over other regions with businesses that have been operational for an average of over 500 years, pointing to a resilient commercial history where companies have thrived through centuries of economic and political changes.*
+
+*In stark contrast, Africa's average business age is notably lower, which may reflect a more recent flourishing of commerce, possibly influenced by later economic development and a younger business ecosystem.*
+
+*This contrast highlights how deeply the history and stability of a region can impact the longevity of its commerce sector.*
+
+ 
 ### 15. How have business categories evolved over time?
   This query investigates changes in business categories across centuries, indicating shifts in economic focus, technological advancement, or societal needs.
 
+**Medieval: From 500 AD up until 1499.**
+
+- This spans the entirety of the Middle Ages, a time following the fall of the Western Roman Empire, through the Dark Ages, and up to the beginning of the Renaissance.
+
+**Early Modern: From 1500 AD up until 1899.** 
+
+- This period covers the Renaissance, the Age of Discovery, the Enlightenment, and leads up to the industrial revolution.
+
+**Modern: From 1900 AD up until 1999.** 
+
+- This includes the 20th century, a time of great technological advancement, world wars, and shifting geopolitical landscapes.
+
+**Contemporary: From the year 2000 AD onwards.** 
+
+- This period is characterized by the digital age, advanced technology, and globalization.
+
 ```sql
-SELECT century, category, COUNT(*) AS count
+SELECT 
+  CASE
+    WHEN century >= 2000 THEN 'Contemporary'
+    WHEN century >= 1900 THEN 'Modern'
+    WHEN century >= 1500 THEN 'Early Modern'
+    WHEN century >= 500 THEN 'Medieval'
+    ELSE 'Ancient'
+  END AS time_period,
+  category,
+  COUNT(*) AS count
 FROM (
     SELECT category, (year_founded / 100 + 1) * 100 AS century
     FROM businesses
     JOIN categories ON businesses.category_code = categories.category_code
 ) AS centuries
-GROUP BY century, category
-ORDER BY century, count DESC;
+GROUP BY time_period, category
+ORDER BY time_period, count DESC;
 ```
 
-![query]()
+![query](Project_Oldest_Businesses\assets\Q15.PNG)
 
-### 16. Which business types are most common among the oldest quartile of businesses?
-  This query looks at common business types among the oldest businesses, suggesting which industries have historically demonstrated endurance and stability.
+*The stacked bar graph illustrates the evolution of business categories over different historical periods*
 
-```sql
-SELECT category, COUNT(*) AS count
-FROM businesses
-JOIN categories ON businesses.category_code = categories.category_code
-WHERE year_founded <= (SELECT PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY year_founded) FROM businesses)
-GROUP BY category
-ORDER BY count DESC;
-```
+*Key Insight:*
 
-![query]()
+- *As early as the Medieval period, construction played a crucial role, laying the infrastructure for burgeoning societies.*
+
+- *During the Early Modern era, the prominence of manufacturing and distilleries suggests a move towards organized industrial activity and social culture.*
+
+- *From Medieval times through the Early Modern era, the hospitality sector consistently served as a social cornerstone.*
+
+- *The Modern period saw a flourishing of economic diversity, with the emergence of tourism, medical services, and financial institutions, showcasing the complexification of societal needs.*
+
+- *Manufacturing remained pivotal into the Modern age, accompanied by the rise of postal services, which facilitated the expanding networks of the time.*
+
+- *A surge in diverse business categories in the Late Modern period illustrates the expanding marketplace and the rapid pace of innovation.*
+
+- *In the Contemporary period, dominance by banking and finance, alongside aviation and transport sectors, marks the current globalized and interconnected economic fabric, with media and energy sectors echoing the digital and sustainability revolutions.*
+
+*Overall, these trends depict an evolution from fundamental industries like construction to a sophisticated, interconnected global economy characterized by finance, technology, and service industries, mirroring the progress in societal development and technological innovation.*
 
 
 ### 17. What are the most prevalent business categories on each continent?
@@ -319,5 +359,14 @@ GROUP BY continent, category
 ORDER BY continent, count DESC;
 ```
 
+![query](Project_Oldest_Businesses\assets\Q17.PNG)
 
-![query]()
+- *The stacked bar graph shows the distribution of business categories by continent, offering several insights:*
+
+- *It reveals that Banking & Finance is a leading business category, particularly dominant in Africa and Asia, which reflects the continent's robust economic growth and significant global financial influence.*
+
+- *Meanwhile, Europe displays a diverse economic profile with strong showings in categories like Manufacturing, Distillers, Vintners,& Breweries .*
+
+- *Notably, Agriculture, a sector traditionally associated with primary economies, still has a presence across most of the continents, underscoring its fundamental and universal importance.*
+
+- *Each continent exhibits a unique economic fingerprint, with varied leading industries that suggest differing regional resources, development strategies, and cultural preferences.*
