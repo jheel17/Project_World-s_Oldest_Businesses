@@ -87,7 +87,7 @@ SELECT
   (SELECT COUNT(*) FROM countries) AS total_countries;
 ```
 
-![query1](Project_Oldest_Businesses\assets\Q1.PNG)
+![query1](Project_Oldest_Businesses/assets/Q1.PNG)
 
 *The dataset reveals a remarkable historical tapestry with 163 businesses enduring across 19 categories and 195 countries, showcasing the global and diverse nature of commercial resilience.*
 
@@ -101,7 +101,7 @@ SELECT DISTINCT category
 FROM categories
 ORDER BY category;
 ```
-![query2](Project_Oldest_Businesses\assets\Q2.PNG)
+![query2](Project_Oldest_Businesses/assets/Q2.PNG)
 
 *The dataset spans a wide array of industries, from Agriculture to Telecommunications, highlighting a rich diversity in the types of businesses that have weathered the centuries, including sectors like "Cafés, Restaurants & Bars" that have long been central to social life.*
 
@@ -115,7 +115,7 @@ SELECT
   MAX(year_founded) AS newest_business_year
 FROM businesses;
 ```
-![query3](Project_Oldest_Businesses\assets\Q3.PNG)
+![query3](Project_Oldest_Businesses/assets/Q3.PNG)
 
 *The dataset captures an extraordinary span of history, with the oldest business dating back to 578 AD and the newest to 1999, showcasing over a millennium of commercial endurance and evolution.*
 
@@ -131,7 +131,7 @@ WHERE year_founded < 1000
 GROUP BY year_founded, business
 ORDER BY year_founded;
 ```
-![query4](Project_Oldest_Businesses\assets\Q4.PNG)
+![query4](Project_Oldest_Businesses/assets/Q4.PNG)
 
 *The table shows a fascinating glimpse into the oldest businesses that have survived for more than a millennium, with a variety of enterprises including a construction company, restaurants, a winery, a mint, and a bar, each having its unique legacy dating as far back as 578 AD*
 
@@ -146,7 +146,7 @@ JOIN countries ON businesses.country_code = countries.country_code
 GROUP BY country
 ORDER BY business_count DESC;
 ```
-![query](Project_Oldest_Businesses\assets\Q7.PNG)
+![query](Project_Oldest_Businesses/assets/Q5.PNG)
 
 *The map visualizes the distribution of the oldest businesses still in operation around the world, with each dot representing at least one business in a country.*
 
@@ -164,7 +164,7 @@ GROUP BY co.continent
 ORDER BY count DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q8.PNG)
+![query](Project_Oldest_Businesses/assets/Q6.PNG)
 
 *This bar graph depicts the number of longstanding businesses by continent, highlighting Africa as the leader with the highest count, followed by Europe.*
 
@@ -180,7 +180,7 @@ GROUP BY c.category
 ORDER BY number_of_businesses DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q9.PNG)
+![query](Project_Oldest_Businesses/assets/Q7.PNG)
 
 *The bar chart shows the distribution of the number of businesses across various categories.*
 
@@ -203,7 +203,7 @@ INNER JOIN
 ORDER BY oldest_founding_year;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q10.PNG)
+![query](Project_Oldest_Businesses/assets/Q8.PNG)
 
 *The table showcases the oldest businesses still in operation on each continent far back as 578 AD for Kongō Gumi in Asia to 1809 for Australia Post in Oceania.*
 
@@ -218,7 +218,7 @@ GROUP BY country
 ORDER BY oldest_year;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q11.PNG)
+![query](Project_Oldest_Businesses/assets/Q9.PNG)
 
 *The map provides a depiction of the oldest businesses in each country, with years of foundation prominently displayed.*
 
@@ -234,7 +234,7 @@ JOIN categories ON businesses.category_code = categories.category_code
 GROUP BY category
 ORDER BY oldest_year;
 ```
-![query](Project_Oldest_Businesses\assets\Q12.PNG)
+![query](Project_Oldest_Businesses/assets/Q10.PNG)
 
 *The table presents the oldest businesses within various categories, revealing that sectors like Construction and Hospitality (Cafés, Restaurants & Bars) have the deepest historical roots, with the oldest businesses dating back to 578 and 803 respectively.*
 
@@ -253,7 +253,7 @@ GROUP BY category
 ORDER BY average_lifespan DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q13.PNG)
+![query](Project_Oldest_Businesses/assets/Q11.PNG)
 
 *The bar chart visualizes the average lifespan of businesses across different categories.*
 
@@ -274,7 +274,7 @@ GROUP BY continent
 ORDER BY average_age DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q14.PNG)
+![query](Project_Oldest_Businesses/assets/Q12.PNG)
 
 *The bar graph illustrates a striking disparity in the average age of businesses across continents.*
 
@@ -324,7 +324,7 @@ GROUP BY time_period, category
 ORDER BY time_period, count DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q15.PNG)
+![query](Project_Oldest_Businesses/assets/Q13.PNG)
 
 *The stacked bar graph illustrates the evolution of business categories over different historical periods*
 
@@ -359,7 +359,7 @@ GROUP BY continent, category
 ORDER BY continent, count DESC;
 ```
 
-![query](Project_Oldest_Businesses\assets\Q17.PNG)
+![query](Project_Oldest_Businesses/assets/Q14.PNG)
 
 - *The stacked bar graph shows the distribution of business categories by continent, offering several insights:*
 
