@@ -151,7 +151,7 @@ ORDER BY business_count DESC;
 *The map visualizes the distribution of the oldest businesses still in operation around the world, with each dot representing at least one business in a country.*
 
  *It appears that every country has at least one long-standing business, with a notable concentration in Africa & Europe, indicating a rich history of commerce and potentially more favorable conditions for business longevity in that region.*
-*
+
 ### 6. What is the count of businesses on each continent?
    This query provides a broader view of the distribution of business longevity and historical commercial activity at the continental level.
 
